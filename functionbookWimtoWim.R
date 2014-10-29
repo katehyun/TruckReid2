@@ -415,6 +415,65 @@ return (list(resultnn =Result_NN, tt = TargetTable))
 
 
 
+f.ResultPNN <- function (threshold_PNN,  TargetTable, p ){
+  
+  pnn_prob <- as.numeric(TargetTable[,2]  )
+  Target_obj <- TargetTable[,4]
+  Target_obj2 <- TargetTable[,5]
+  
+  for (j in 1: length(threshold_PNN)) {
+    
+    
+    
+    for (i in 1:length( TargetTable[,1])){
+      
+      if (max_pnn_prob[i] > threshold_PNN[j]){
+        pnn_Upid_after[i] <- as.numeric(TargetTable[i,6])
+      }
+      else {
+        pnn_Upid_after[i] <- as.numeric(c(999))
+      }
+      
+    }
+    
+    TargetTable <- cbind ( TargetTable, pnn_Upid_after )
+    
+    missing_obj <- length (Target_obj[is.na(Target_obj)]) 
+    matching_obj <- length (Target_obj[!is.na(Target_obj)]) 
+    
+    matching_NN <-table( Target_obj == pnn_Upid_after)["TRUE"]
+    missing_NN <- table(pnn_Upid_after == c(999))["TRUE"]
+    
+    
+    CMVeh <-  matching_NN[1]
+    CVeh <- matching_obj[1]
+    MVeh <- sum(   (as.numeric( TargetTable[,p])) > 1000 )  
+    
+    
+    SIMR <- CMVeh / CVeh
+    SCMR <- CMVeh / MVeh
+    
+    MMVeh <- length(  subset(TargetTable[,1], as.numeric( Target_obj2 ) 
+                             !=  as.numeric( TargetTable[,p])   ))
+    
+    p <- p+1
+    Veh <- length(TargetTable[,1])
+    SER <- MMVeh / Veh
+    
+    Result <- data.frame(threshold_PNN[j], matching_obj[1], missing_obj[1],              
+                         matching_NN[[1]],  missing_NN[[1]],
+                         CMVeh[[1]], CVeh[[1]], MVeh[[1]], SIMR[[1]], SCMR[[1]], MMVeh[[1]], Veh[[1]], SER[[1]] )
+    
+    Result_PNN <- rbind(Result_PNN, Result)
+  }
+  
+  return (list(resultpnn =Result_PNN, tt = TargetTable))
+}
+
+
+
+
+
 f.ErrorMag <- function( Upsigid, Downsigid){
   
   time <- seq(from= 0, to= 1, by = 1/(num-1))

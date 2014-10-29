@@ -31,8 +31,6 @@ buffergvw = 40
 
 ### input file - Jan 0910
 
-
-
 Upheader = SO.Jan0910Header
 Upheader[,14] <- SOJan_v1[,6][match( Upheader$sigid, SOJan_v1[,3])] # FHWA class
 Upheader[,15] <- SOJan_v1[,8][match( Upheader$sigid, SOJan_v1[,3])] # length
@@ -271,13 +269,12 @@ for (j in 1: length(Downheader_ID)){
 
 ### input files - DOWN
 
-num <- 50
-no_round <- 100
+num <- 1000
+no_round <- 1000
 
 # find index for potential matching
 Downidx <- match ( (Downheader_ID),Downsig_IM[,3] )
 Downidx <- Downidx[!is.na(Downidx)]
-
 
 Downindex <- c()
 Downobjout <- c()
@@ -308,17 +305,13 @@ for (w in 1: length(Downidx)){
 Upsig = SO.Jan0910sig # Mar 20
 Upsig_IM=subset(Upsig, select=c(id,mag,sigid))
 
-
 for (i in 1:length(Upheader_new)){
   Upidx <- match ( Upheader_new$sigid, Upsig_IM$sigid ) 
 }
 
 UpheaderID <-Upsig_IM[Upidx,3]
-
-
 Upindex <- c()
 Upobjout <- c()
-
 
 for (w in 1: length(Upidx)){
 # for (w in 1: 20){
@@ -345,12 +338,12 @@ save(Upheader_new, file="./ProcessedData/Jan0910/Upheader_new.RData")
 save(Downheader_new, file="./ProcessedData/Jan0910/Downheader_new.RData")
 save(Upsiglist, file="./ProcessedData/Jan0910/Upsiglist.RData")
 
-save.image("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/09252014Jan0910.RData")  # for Jan 0910
+save.image("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/10282014Jan0910.RData")  # for Jan 0910
 #0925 : 50 features
 #0808 : 1000 features
 
-save(Upobjout, file="./ProcessedData/Jan0910/Upobjout_50f.RData")
-save(Downobjout, file="./ProcessedData/Jan0910/Downobjout_50f.RData")
+save(Upobjout, file="./ProcessedData/Jan0910/Upobjout.RData")
+save(Downobjout, file="./ProcessedData/Jan0910/Downobjout.RData")
 #####################################################################end
 # remove files
 

@@ -84,7 +84,7 @@ Downheader_ID <- Downheader_new$sigid
   
             
             min_stretmagdif <- c()
-            splineUpidx <- match (Upsiglist[[w]][q] , UpheaderID)
+            splineUpidx <- match (Upsiglist[[w]][q] , Upheader_ID)
             splineUp <- Upobjout[splineUpidx,]
             
 
@@ -139,9 +139,9 @@ Downheader_ID <- Downheader_new$sigid
 }
 
 
-save(candidate, file="./ProcessedData/Jan0910/candidate.RData")
-save(a_magdif, file="./ProcessedData/Jan0910/a_magdif.RData")
-save(a_basemagdif, file="./ProcessedData/Jan0910/a_basemagdif.RData")
+save(candidate, file="C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/candidate.RData")
+save(a_magdif, file="C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/a_magdif.RData")
+save(a_basemagdif, file="C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/a_basemagdif.RData")
 
 #write.table(candi_1[[1]], "./ProcessedData/TestCode/candi1.txt", sep="\t")
 

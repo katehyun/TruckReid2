@@ -4,12 +4,16 @@ rm(list=ls())
 library(pnn)
 setwd("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid") 
 
-load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/shiftandstretch_Jan0910.RData")
+# load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/shiftandstretch_Jan0910.RData")
 
 load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Upobjout.RData ")
 load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Downobjout.RData ")
 load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/a_magdif.RData ")
 load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/a_basemagdif.RData ")
+load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Upheader_new.RData")
+load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Downheader_new.RData")
+load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/candidate.RData")
+load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Upsiglist.RData")
 
 rm (rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8 )
 rm(swift, stret, ss, splineDown, splineUp, minstretmagdif, minswiftmagdif, magdif, candi_magdif)
@@ -77,18 +81,25 @@ for (i in 1:length(a_magdif)){
 }
 
 
+#matching loading# 
+#     matching_SOLC=read.table("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/RawData/LCJan/MatchingIDSOLC.txt")
+#     colnames(matching_SOLC) <- c("SO", "LC")
+#     matching_SOLC <- format(matching_SOLC, scientific=FALSE)
+#     
+#     matching <- subset(matching_SOLC , substr(SO, 3, 13) <  substr(LC, 3, 13))
+
+
 # Jan 0910
 p <- 7
 rm(Target_baseanalysis_Jan0910_table, Result_NN, Result)
 Target_baseanalysis_Jan0910_obj2 <- rep(999, length(a_Upid))
 
-Downtarget <- Downheader_ID
+Downtarget <- vector()
+Downtarget <- Downheader_new$sigid
 
 
 SOLCAllFHWAClass <- read.table("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/RawData/LCJan/LCJan_v1.txt", fill=T)
 SOLCFHWAClass <- SOLCAllFHWAClass[,6] [match (Downtarget, SOLCAllFHWAClass[,3])] 
-
-Downtarget=Downtarget[1:length(candi_1)]
 
 Target_baseanalysis_Jan0910_obj  <- (matching$SO[ match ( Downtarget,  matching$LC )])
 Target_baseanalysis_Jan0910_obj2 <- Target_baseanalysis_Jan0910_obj
@@ -126,6 +137,7 @@ for (z in 1: length(Class)){
 }
 
 options(scipen=999)
+
 write.table(TargetTable9, "./TargetTable9.txt", sep="\t",row.names=FALSE)
 write.table(Result_NN9, "./Result_NN9.txt", sep="\t",row.names=FALSE)
 
