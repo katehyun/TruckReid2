@@ -14,6 +14,7 @@ load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Uphea
 load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Downheader_new.RData")
 load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/candidate.RData")
 load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Upsiglist.RData")
+load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/matching.RData")
 
 rm (rank1, rank2, rank3, rank4, rank5, rank6, rank7, rank8 )
 rm(swift, stret, ss, splineDown, splineUp, minstretmagdif, minswiftmagdif, magdif, candi_magdif)
@@ -97,9 +98,31 @@ Target_baseanalysis_Jan0910_obj2 <- rep(999, length(a_Upid))
 Downtarget <- vector()
 Downtarget <- Downheader_new$sigid
 
+library( RPostgreSQL)
+drv <- dbDriver("PostgreSQL")
+con <- dbConnect(drv, host='titan.its.uci.edu', port='5432', dbname='arbtrucks',
+                 user='arbtrucks', password='ohmytrucks')
 
-SOLCAllFHWAClass <- read.table("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/RawData/LCJan/LCJan_v1.txt", fill=T)
-SOLCFHWAClass <- SOLCAllFHWAClass[,6] [match (Downtarget, SOLCAllFHWAClass[,3])] 
+
+LCGTML <- dbGetQuery(con, 
+            "SELECT  groundtruthmasterlist.vehid, wimlink.wimid, wimsignaturelink.wimsigid, 
+            groundtruthmasterlist.station, groundtruthmasterlist.lane,
+            veh_class, wimrecords.ts,  veh_len, gross_weight, axle_1_2_spacing, axle_2_3_spacing,
+            axle_3_4_spacing, axle_4_5_spacing, 
+            axle_1_rt_weight, axle_1_lt_weight, axle_2_rt_weight, axle_2_lt_weight, axle_3_rt_weight,
+            axle_3_lt_weight, axle_4_rt_weight, 
+            axle_4_lt_weight, axle_5_rt_weight, axle_5_lt_weight
+            FROM  gtsystem.wimlink, gtsystem.wimsignaturelink, gtsystem.wimrecords,gtsystem.groundtruthmasterlist
+            where groundtruthmasterlist.vehid = wimlink.vehid 
+            and groundtruthmasterlist.vehid = wimsignaturelink.vehid
+            and wimlink.wimid = wimrecords.wim_id
+            and station = 84
+            order by wimrecords.ts")
+
+SOLCFHWAClass <-LCGTML[,6] [match (Downtarget, LCGTML[,3])] 
+dbDisconnect(con)
+# SOLCAllFHWAClass <- read.table("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/RawData/LCJan/LCJan_v1.txt", fill=T)
+# SOLCFHWAClass <- SOLCAllFHWAClass[,6] [match (Downtarget, SOLCAllFHWAClass[,3])] 
 
 Target_baseanalysis_Jan0910_obj  <- (matching$SO[ match ( Downtarget,  matching$LC )])
 Target_baseanalysis_Jan0910_obj2 <- Target_baseanalysis_Jan0910_obj
@@ -114,23 +137,28 @@ Target_baseanalysis_Jan0910_table <- cbind(SOLCFHWAClass,min_a_basemagdif,min_a_
 mode(Target_baseanalysis_Jan0910_table) <- "numeric"
 
 # start from here  - by Class
-threshold_NN<- seq(from = 20, to = 80, by = 1) 
-Result_NN <-data.frame()
+threshold_NN<- seq(from = 20, to = 120, by = 1) 
+# Result_NN <-list()
 
 
 Class <- sort(unique(Target_baseanalysis_Jan0910_table[,1]))
 p <- 9
 
 # by class
-
+Result_NN <- list()
+TargetTable_NN <- list()
 
 for (z in 1: length(Class)){
 
   setwd("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Result/") 
   TargetTable <- subset(Target_baseanalysis_Jan0910_table, Target_baseanalysis_Jan0910_table[,1] == Class[z])
   classresult <- f.ResultNN (threshold_NN,  TargetTable, p )
-  assign(paste("Result_NN",Class[z],sep=""), classresult$resultnn)
-  assign(paste("TargetTable",Class[z], sep=""),classresult$tt )
+  Result_NN[[z]] <- classresult$resultnn
+  TargetTable_NN[[z]] <- classresult$tt
+ 
+#   classresult <- list()
+#   assign(paste("Result_NN",Class[z],sep=""), classresult$resultnn)
+#   assign(paste("TargetTable_NN",Class[z], sep=""),classresult$tt )
   #write.table(classresult$tt, paste("TargetTable",Class[z], (".txt"), sep=""), sep="\t",row.names=FALSE)
   #write.table(classresult$resultnn, paste("Result_NN",Class[z], (".txt"), sep=""), sep="\t",row.names=FALSE)
 

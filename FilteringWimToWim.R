@@ -344,6 +344,7 @@ save.image("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910
 
 save(Upobjout, file="./ProcessedData/Jan0910/Upobjout.RData")
 save(Downobjout, file="./ProcessedData/Jan0910/Downobjout.RData")
+save(matching, file="C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/matching.RData")
 #####################################################################end
 # remove files
 

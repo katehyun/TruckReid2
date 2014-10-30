@@ -103,15 +103,18 @@ mode(Target_pnnanalysis_Jan0910_table) <- "numeric"
 
 Class <- sort(unique(Target_pnnanalysis_Jan0910_table[,1]))
 p <- 7
-Result_PNN <-data.frame()
+Result_PNN <-list()
+TargetTable_PNN <-list()
 
 for (z in 1: length(Class)){
   
   setwd("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/Result/") 
   TargetTable <- subset(Target_pnnanalysis_Jan0910_table, Target_pnnanalysis_Jan0910_table[,1] == Class[z])
   classresult <- f.ResultPNN (threshold_PNN,  TargetTable, p )
-  assign(paste("Result_PNN",Class[z],sep=""), classresult$resultpnn)
-  assign(paste("TargetTable",Class[z], sep=""),classresult$tt )
+  Result_PNN[[z]] <- classresult$resultpnn
+  TargetTable_PNN[[z]] <- classresult$tt
+#   assign(paste("Result_PNN",Class[z],sep=""), classresult$resultpnn)
+#   assign(paste("TargetTable",Class[z], sep=""),classresult$tt )
   #write.table(classresult$tt, paste("TargetTable",Class[z], (".txt"), sep=""), sep="\t",row.names=FALSE)
   #write.table(classresult$resultnn, paste("Result_NN",Class[z], (".txt"), sep=""), sep="\t",row.names=FALSE)
   

@@ -363,6 +363,7 @@ f.ResultNN <- function (threshold_NN,  TargetTable, p ){
 a_magdif <- as.numeric(TargetTable[,3]  )
 Target_obj <- TargetTable[,5]
 Target_obj2 <- TargetTable[,6]
+Result_NNtemp <- data.frame()
 
 for (j in 1: length(threshold_NN)) {
 
@@ -407,10 +408,10 @@ for (j in 1: length(threshold_NN)) {
                        matching_NN[[1]],  missing_NN[[1]],
                        CMVeh[[1]], CVeh[[1]], MVeh[[1]], SIMR[[1]], SCMR[[1]], MMVeh[[1]], Veh[[1]], SER[[1]] )
   
-  Result_NN <- rbind(Result_NN, Result)
+  Result_NNtemp <- rbind(Result_NNtemp, Result)
 }
 
-return (list(resultnn =Result_NN, tt = TargetTable))
+return (list(resultnn =Result_NNtemp, tt = TargetTable))
 }
 
 
@@ -420,6 +421,7 @@ f.ResultPNN <- function (threshold_PNN,  TargetTable, p ){
   pnn_prob <- as.numeric(TargetTable[,2]  )
   Target_obj <- TargetTable[,4]
   Target_obj2 <- TargetTable[,5]
+  Result_PNNtemp <- data.frame()
   
   for (j in 1: length(threshold_PNN)) {
     
@@ -464,10 +466,10 @@ f.ResultPNN <- function (threshold_PNN,  TargetTable, p ){
                          matching_NN[[1]],  missing_NN[[1]],
                          CMVeh[[1]], CVeh[[1]], MVeh[[1]], SIMR[[1]], SCMR[[1]], MMVeh[[1]], Veh[[1]], SER[[1]] )
     
-    Result_PNN <- rbind(Result_PNN, Result)
+    Result_PNNtemp <- rbind(Result_PNNtemp, Result)
   }
   
-  return (list(resultpnn =Result_PNN, tt = TargetTable))
+  return (list(resultpnn =Result_PNNtemp, tt = TargetTable))
 }
 
 
