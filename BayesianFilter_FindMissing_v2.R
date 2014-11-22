@@ -1,18 +1,18 @@
-rm(sub_all_v2)
+rm(sub_all_v2, aub_all_diff)
 UpFinalcandidates <-as.numeric (unlist(UpFinalcandidates) )
 Target_baseanalysis_Jan0910_table_class9 <- subset( Target_baseanalysis_Jan0910_table, 
                                                     as.numeric (Target_baseanalysis_Jan0910_table[,1]) == 9  )
 sub_all_v2 <-  Target_baseanalysis_Jan0910_table_class9[,1:4]
-                     
+
 sub_all_v2 <- cbind(sub_all_v2,Target_baseanalysis_Jan0910_table_class9[,6])
 sub_all_v2 <- cbind(sub_all_v2,UpFinalcandidates)
 sub_all_v2 <- cbind( sub_all_v2,      
-                  Downheader_new[ match( sub_all_v2[,4], as.numeric(Downheader_new[,13])),13:20] ,
-                  Downheader_new[ match( sub_all_v2[,4], as.numeric(Downheader_new[,13])),7] ,
-                  Downheader_new[ match( sub_all_v2[,4], as.numeric(Downheader_new[,13])),12] ,
-                  Upheader_new[ match( sub_all_v2[,6], as.numeric(Upheader_new[,13])),13:20] , # should be 6?
-                  Upheader_new[ match( sub_all_v2[,6], as.numeric(Upheader_new[,13])),7] ,
-                  Upheader_new[ match( sub_all_v2[,6], as.numeric(Upheader_new[,13])),12] ) 
+                     Downheader_new[ match( sub_all_v2[,4], as.numeric(Downheader_new[,13])),13:20] ,
+                     Downheader_new[ match( sub_all_v2[,4], as.numeric(Downheader_new[,13])),7] ,
+                     Downheader_new[ match( sub_all_v2[,4], as.numeric(Downheader_new[,13])),12] ,
+                     Upheader_new[ match( sub_all_v2[,6], as.numeric(Upheader_new[,13])),13:20] , # should be 6?
+                     Upheader_new[ match( sub_all_v2[,6], as.numeric(Upheader_new[,13])),7] ,
+                     Upheader_new[ match( sub_all_v2[,6], as.numeric(Upheader_new[,13])),12] ) 
 sub_all_v2 <- na.omit(sub_all_v2)
 
 
@@ -20,6 +20,20 @@ sub_all_v2 <- na.omit(sub_all_v2)
 
 sub_all_diff <- abs(sub_all_v2[9:16] - sub_all_v2[,19:26])
 sub_all_diff <- cbind(sub_all_diff, sub_all_v2[,3])
+
+#normalize
+sub_all_diff [,1] <- sub_all_diff [,1]/maxlength
+sub_all_diff [,2] <- sub_all_diff [,2]/maxgvw
+sub_all_diff [,3] <- sub_all_diff [,3]/maxax12sp
+sub_all_diff [,4] <- sub_all_diff [,4]/maxax23sp
+sub_all_diff [,5] <- sub_all_diff [,5]/maxax34sp
+sub_all_diff [,6] <- sub_all_diff [,6]/maxax45sp
+sub_all_diff [,7] <- sub_all_diff [,7]/maxdur
+sub_all_diff [,8] <- sub_all_diff [,8]/maxutc
+sub_all_diff [,9] <- sub_all_diff [,9]/maxmag
+
+colnames(sub_all_diff)[1:9] <- c("length", "gvw", "ax12sp", "ax23sp", "ax34sp", "ax45sp", "duration", "utc", "mag")
+
 
 q=9
 sub_all_diff[,q+1] <-(approx(kernel.length_m$x, kernel.length_m$y, sub_all_diff[,1]) )$y
@@ -32,6 +46,9 @@ sub_all_diff[,q+7] <-(approx(kernel.dur_m$x, kernel.dur_m$y, sub_all_diff[,7]) )
 sub_all_diff[,q+8] <-(approx(kernel.utc_m$x, kernel.utc_m$y, sub_all_diff[,8]) )$y
 sub_all_diff[,q+9] <-(approx(kernel.magdif_m$x, kernel.magdif_m$y, sub_all_diff[,9]) )$y
 
+colnames(sub_all_diff)[10:18] <- c("length", "gvw", "ax12sp", "ax23sp", "ax34sp", "ax45sp", "duration", "utc", "mag")
+
+
 qq=9+9
 sub_all_diff[,qq+1] <-(approx(kernel.length_nm$x, kernel.length_nm$y, sub_all_diff[,1]) )$y
 sub_all_diff[,qq+2] <-(approx(kernel.gvw_nm$x, kernel.gvw_nm$y, sub_all_diff[,2]) )$y
@@ -43,12 +60,14 @@ sub_all_diff[,qq+7] <-(approx(kernel.dur_nm$x, kernel.dur_nm$y, sub_all_diff[,7]
 sub_all_diff[,qq+8] <-(approx(kernel.utc_nm$x, kernel.utc_nm$y, sub_all_diff[,8]) )$y
 sub_all_diff[,qq+9] <-(approx(kernel.magdif_nm$x, kernel.magdif_nm$y, sub_all_diff[,9]) )$y
 
+colnames(sub_all_diff)[19:27] <-  c("length", "gvw", "ax12sp", "ax23sp", "ax34sp", "ax45sp", "duration", "utc", "mag")
+
 sub_all_diff [is.na(sub_all_diff )] <- 0.000000000001
 
 colnames(sub_all_diff)[10:18] <- c("mlength", "mgvw", "max12sp", "max23sp", "max34sp", "max45sp", 
-                                     "mduration", "mutc", "mmagdif")
+                                   "mduration", "mutc", "mmagdif")
 colnames(sub_all_diff)[19:27] <- c("nmlength", "nmgvw", "nmax12sp", "nmax23sp", "nmax34sp", "nmax45sp", 
-                                     "nmduration", "nmutc", "nmmagdif")
+                                   "nmduration", "nmutc", "nmmagdif")
 
 q <- 9
 weight <- 1
