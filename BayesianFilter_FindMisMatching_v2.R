@@ -1,5 +1,5 @@
 rm(list=ls())
-load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/20141030Jan0910.RData") 
+load("C:/Users/Kate Hyun/Dropbox/Kate/ReID/TruckReid/ProcessedData/Jan0910/20141125Jan0910.RData") 
 ## kernel estimation 
 rm(sub_matching, sub_nonmatching, sub_all)
 
@@ -376,9 +376,9 @@ k <- 0
 m <- 0
 
 Target_baseanalysis_Jan0910_table_train <- subset(Target_baseanalysis_Jan0910_table, 
-      as.numeric(str_sub (Target_baseanalysis_Jan0910_table[,3],-13,-1) ) <  1357804800000  )
+      as.numeric(str_sub (Target_baseanalysis_Jan0910_table[,4],-13,-1) ) <  1357804800000  )
 Target_baseanalysis_Jan0910_table_test<- subset(Target_baseanalysis_Jan0910_table, 
-      as.numeric(str_sub (Target_baseanalysis_Jan0910_table[,3],-13,-1) ) >  1357804800000  )
+      as.numeric(str_sub (Target_baseanalysis_Jan0910_table[,4],-13,-1) ) >  1357804800000  )
 
 
 for (i in 1:length(Upcandidates_train)){
@@ -394,9 +394,9 @@ for (i in 1:length(Upcandidates_train)){
          jointprobtemp_train[j,1] <-(approx(kernel.length_m$x, kernel.length_m$y, Attribute_diff_train[[i]][[j]][1]) )$y
          jointprobtemp_train[j,2] <-(approx(kernel.gvw_m$x, kernel.gvw_m$y, Attribute_diff_train[[i]][[j]][2]) )$y
          jointprobtemp_train[j,3] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Attribute_diff_train[[i]][[j]][3]) )$y
-         jointprobtemp_train[j,4] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Attribute_diff_train[[i]][[j]][4]) )$y
-         jointprobtemp_train[j,5] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Attribute_diff_train[[i]][[j]][5]) )$y
-         jointprobtemp_train[j,6] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Attribute_diff_train[[i]][[j]][6]) )$y
+         jointprobtemp_train[j,4] <-(approx(kernel.axsp23_m$x, kernel.axsp23_m$y, Attribute_diff_train[[i]][[j]][4]) )$y
+         jointprobtemp_train[j,5] <-(approx(kernel.axsp34_m$x, kernel.axsp34_m$y, Attribute_diff_train[[i]][[j]][5]) )$y
+         jointprobtemp_train[j,6] <-(approx(kernel.axsp45_m$x, kernel.axsp45_m$y, Attribute_diff_train[[i]][[j]][6]) )$y
          jointprobtemp_train[j,7] <-(approx(kernel.dur_m$x, kernel.dur_m$y, Attribute_diff_train[[i]][[j]][7]) )$y
          jointprobtemp_train[j,8] <-(approx(kernel.utc_m$x, kernel.utc_m$y, Attribute_diff_train[[i]][[j]][8]) )$y
          jointprobtemp_train[j,9] <- as.numeric (prob[[i]][[1]][Upcandidatesindex_train[[i]][j]] ) # CHECK!!!
@@ -428,9 +428,9 @@ for (i in 1:length(Upcandidates_test)){
        jointprobtemp_test[j,1] <-(approx(kernel.length_m$x, kernel.length_m$y, Attribute_diff_test[[i]][[j]][1]) )$y
        jointprobtemp_test[j,2] <-(approx(kernel.gvw_m$x, kernel.gvw_m$y, Attribute_diff_test[[i]][[j]][2]) )$y
        jointprobtemp_test[j,3] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Attribute_diff_test[[i]][[j]][3]) )$y
-       jointprobtemp_test[j,4] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Attribute_diff_test[[i]][[j]][4]) )$y
-       jointprobtemp_test[j,5] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Attribute_diff_test[[i]][[j]][5]) )$y
-       jointprobtemp_test[j,6] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Attribute_diff_test[[i]][[j]][6]) )$y
+       jointprobtemp_test[j,4] <-(approx(kernel.axsp23_m$x, kernel.axsp23_m$y, Attribute_diff_test[[i]][[j]][4]) )$y
+       jointprobtemp_test[j,5] <-(approx(kernel.axsp34_m$x, kernel.axsp34_m$y, Attribute_diff_test[[i]][[j]][5]) )$y
+       jointprobtemp_test[j,6] <-(approx(kernel.axsp45_m$x, kernel.axsp45_m$y, Attribute_diff_test[[i]][[j]][6]) )$y
        jointprobtemp_test[j,7] <-(approx(kernel.dur_m$x, kernel.dur_m$y, Attribute_diff_test[[i]][[j]][7]) )$y
        jointprobtemp_test[j,8] <-(approx(kernel.utc_m$x, kernel.utc_m$y, Attribute_diff_test[[i]][[j]][8]) )$y
        jointprobtemp_test[j,9] <- as.numeric (prob[[i]][[1]][Upcandidatesindex_test[[i]][j]] ) # CHECK!!!
@@ -461,37 +461,74 @@ ResultMisMatching_train <- cbind(Target_baseanalysis_Jan0910_table_train[Target_
 ResultMisMatching_test<- cbind(Target_baseanalysis_Jan0910_table_test[Target_baseanalysis_Jan0910_table_test[,1] == 9, 6],
       Target_baseanalysis_Jan0910_table_test[Target_baseanalysis_Jan0910_table_test[,1] == 9, 4], UpFinalcandidates_test)
 
-# performance 
+### performance 
+
+# train
 ResultMisMatching_train <- na.omit(ResultMisMatching_train)
-TargetTable <- ResultMisMatching_train 
-Target_obj  <- ResultMisMatching_train [,1]
+TargetTable_train <- ResultMisMatching_train 
+Target_obj_train  <- ResultMisMatching_train [,1]
 
-missing_obj  <- length (Target_obj[Target_obj == 999]) 
-matching_obj <- length (Target_obj[Target_obj != 999]) 
+missing_obj_train  <- length (Target_obj_train[Target_obj_train == 999]) 
+matching_obj_train <- length (Target_obj_train[Target_obj_train != 999]) 
 
-matching_NN <- sum ( as.numeric (ResultMisMatching_train [,1]) == as.numeric (ResultMisMatching_train [,2]) &
+matching_NN_train <- sum ( as.numeric ((ResultMisMatching_train [,1]) == as.numeric (ResultMisMatching_train [,3])) &
                       as.numeric (ResultMisMatching_train [,1]) != 999)
 
-missing_NN <- sum ( as.numeric (ResultMisMatching_train [,2]) == c(999))
+missing_NN_train <- sum ( as.numeric (ResultMisMatching_train[,1]) == c(999))
 
-CMVeh <-  matching_NN[1]
-CVeh <- matching_obj[1]
-p <- 2
-MVeh <- sum(   (as.numeric( TargetTable[,p])) > 1000 )  
+CMVeh_train <-  matching_NN_train[1]
+CVeh_train <- matching_obj_train[1]
+p <- 3
+MVeh_train <- sum(   (as.numeric( TargetTable_train[,p])) > 1000 )  
 
-SIMR <- CMVeh / CVeh
-SCMR <- CMVeh / MVeh
+SIMR_train <- CMVeh_train / CVeh_train
+SCMR_train <- CMVeh_train / MVeh_train
 
-MMVeh <- length(  subset(TargetTable[,1], as.numeric( Target_obj ) 
-                         !=  as.numeric( TargetTable[,p])   ))
+MMVeh_train <- length(  subset(TargetTable_train[,1], as.numeric( Target_obj_train ) 
+                         !=  as.numeric( TargetTable_train[,p])   ))
 
 
-Veh <- length(TargetTable[,1])
-SER <- MMVeh / Veh
+Veh_train <- length(TargetTable_train[,1])
+SER_train <- MMVeh_train / Veh_train
 
-Result2<- data.frame( matching_obj[1], missing_obj[1],              
-                      matching_NN[[1]],  missing_NN[[1]],
-                      CMVeh[[1]], CVeh[[1]], MVeh[[1]], SIMR[[1]], SCMR[[1]], MMVeh[[1]], Veh[[1]], SER[[1]] )
+ResultMismatching_train<- data.frame( matching_obj_train[1], missing_obj_train[1],              
+                      matching_NN_train[[1]],  missing_NN_train[[1]],
+                      CMVeh_train[[1]], CVeh_train[[1]], MVeh_train[[1]],
+                      SIMR_train[[1]], SCMR_train[[1]], MMVeh_train[[1]], Veh_train[[1]], SER_train[[1]] )
+
+
+# test
+ResultMisMatching_test <- na.omit(ResultMisMatching_test)
+TargetTable_test <- ResultMisMatching_test 
+Target_obj_test  <- ResultMisMatching_test [,1]
+
+missing_obj_test  <- length (Target_obj_test[Target_obj_test == 999]) 
+matching_obj_test <- length (Target_obj_test[Target_obj_test != 999]) 
+
+matching_NN_test <- sum ( as.numeric ((ResultMisMatching_test[,1]) == as.numeric (ResultMisMatching_test[,3])) &
+                            as.numeric (ResultMisMatching_test [,1]) != 999)
+
+missing_NN_test <- sum ( as.numeric (ResultMisMatching_test [,1]) == c(999))
+
+CMVeh_test <-  matching_NN_test[1]
+CVeh_test <- matching_obj_test[1]
+p <- 3
+MVeh_test <- sum(   (as.numeric( TargetTable_test[,p])) > 1000 )  
+
+SIMR_test <- CMVeh_test / CVeh_test
+SCMR_test <- CMVeh_test / MVeh_test
+
+MMVeh_test <- length(  subset(TargetTable_test[,1], as.numeric( Target_obj_test ) 
+                              !=  as.numeric( TargetTable_test[,p])   ))
+
+
+Veh_test <- length(TargetTable_test[,1])
+SER_test <- MMVeh_test / Veh_test
+
+ResultMismatching_test <- data.frame( matching_obj_test[1], missing_obj_test[1],              
+                                     matching_NN_test[[1]],  missing_NN_test[[1]],
+                                     CMVeh_test[[1]], CVeh_test[[1]], MVeh_test[[1]],
+                                     SIMR_test[[1]], SCMR_test[[1]], MMVeh_test[[1]], Veh_test[[1]], SER_test[[1]] )
 # rm(test)
 # options(digits=6)
 # test <- cbind(sub_all[,3], sub_all[,5], sub_all[,6],sub_all[,27],sub_all[,28] ,sub_all[,30])
