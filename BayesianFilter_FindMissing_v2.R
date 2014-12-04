@@ -1,5 +1,4 @@
-
-
+# find missing
 Upcandidates_attribute_train_missing <- data.frame()
 Attribute_difftemp_train_missing <- list()
 Attribute_diff_nonnormal_train_missing <- list()
@@ -16,39 +15,42 @@ for (i in 1: length(TargetTable_train[,3])) {
   
   Upcandidates_attribute_train_missing[i,1] <-      
     abs( Upheader_new_train[ match( as.numeric(TargetTable_train[i,3]), as.numeric(Upheader_new_train[,13])),15] -
-           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),15] ) / maxlength_train
+           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),15] )  / max_train[1]
   
   
   Upcandidates_attribute_train_missing[i,2]  <-    
     abs( Upheader_new_train[ match( as.numeric(TargetTable_train[i,3]), as.numeric(Upheader_new_train[,13])),16] -
-           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),16]) / maxgvw_train
+           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),16])  / max_train[2]
   
   
   Upcandidates_attribute_train_missing[i,3]  <-    
     abs( Upheader_new_train[ match( as.numeric(TargetTable_train[i,3]), as.numeric(Upheader_new_train[,13])),17] -
-           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),17])/ maxax12sp_train
+           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),17])   / max_train[3]
   
   
   Upcandidates_attribute_train_missing[i,4]  <-    
     abs( Upheader_new_train[ match( as.numeric(TargetTable_train[i,3]), as.numeric(Upheader_new_train[,13])),18] -
-           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),18])/ maxax23sp_train
+           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),18])   / max_train[4]
   
   
   Upcandidates_attribute_train_missing[i,5]  <-    
     abs(  Upheader_new_train[ match( as.numeric(TargetTable_train[i,3]), as.numeric(Upheader_new_train[,13])),19] -
-            Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),19]) / maxax34sp_train
+            Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),19])  / max_train[5]
   
   Upcandidates_attribute_train_missing[i,6]  <-    
     abs(  Upheader_new_train[ match( as.numeric(TargetTable_train[i,3]), as.numeric(Upheader_new_train[,13])),20] -
-            Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),20])/ maxax45sp_train
+            Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])),20])  / max_train[6]
   
   Upcandidates_attribute_train_missing[i,7] <-
     abs(  Upheader_new_train[ match( as.numeric(TargetTable_train[i,3]), as.numeric(Upheader_new_train[,13])),7] - 
-            Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])), 7]) / maxdur_train
+            Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])), 7])  / max_train[7]
   
   Upcandidates_attribute_train_missing[i,8] <-
     abs( Upheader_new_train[ match( as.numeric(TargetTable_train[i,3]), as.numeric(Upheader_new_train[,13])),12] - 
-           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])), 12]) / maxutc_train
+           Downheader_new[ match( as.numeric(TargetTable_train[i,2]), as.numeric( Downheader_new[,13])), 12])  / max_train[8]
+  
+  Upcandidates_attribute_train_missing[i,9] <-
+    sub_all_train[ match( as.numeric(TargetTable_train[i,3]), as.numeric( sub_all_train[,6])),3]  / max_train[9]
   
   
 }
@@ -62,39 +64,42 @@ for (i in 1: length(TargetTable_test[,3])) {
   
   Upcandidates_attribute_test_missing[i,1] <-      
     abs( Upheader_new_test[ match( as.numeric(TargetTable_test[i,3]), as.numeric(Upheader_new_test[,13])),15] -
-           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),15] ) / maxlength_test
+           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),15] ) / max_test[1]
   
   
   Upcandidates_attribute_test_missing[i,2]  <-    
     abs( Upheader_new_test[ match( as.numeric(TargetTable_test[i,3]), as.numeric(Upheader_new_test[,13])),16] -
-           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),16]) / maxgvw_test
+           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),16])  / max_test[2]
   
   
   Upcandidates_attribute_test_missing[i,3]  <-    
     abs( Upheader_new_test[ match( as.numeric(TargetTable_test[i,3]), as.numeric(Upheader_new_test[,13])),17] -
-           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),17])/ maxax12sp_test
+           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),17])  / max_test[3]
   
   
   Upcandidates_attribute_test_missing[i,4]  <-    
     abs( Upheader_new_test[ match( as.numeric(TargetTable_test[i,3]), as.numeric(Upheader_new_test[,13])),18] -
-           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),18])/ maxax23sp_test
+           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),18])  / max_test[4]
   
   
   Upcandidates_attribute_test_missing[i,5]  <-    
     abs(  Upheader_new_test[ match( as.numeric(TargetTable_test[i,3]), as.numeric(Upheader_new_test[,13])),19] -
-            Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),19]) / maxax34sp_test
+            Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),19])  / max_test[5]
   
   Upcandidates_attribute_test_missing[i,6]  <-    
     abs(  Upheader_new_test[ match( as.numeric(TargetTable_test[i,3]), as.numeric(Upheader_new_test[,13])),20] -
-            Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),20])/ maxax45sp_test
+            Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])),20])  / max_test[6]
   
   Upcandidates_attribute_test_missing[i,7] <-
     abs(  Upheader_new_test[ match( as.numeric(TargetTable_test[i,3]), as.numeric(Upheader_new_test[,13])),7] - 
-            Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])), 7])/ maxdur_test
+            Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])), 7])  / max_test[7]
   
   Upcandidates_attribute_test_missing[i,8] <-
     abs( Upheader_new_test[ match( as.numeric(TargetTable_test[i,3]), as.numeric(Upheader_new_test[,13])),12] - 
-           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])), 12])/ maxutc_train
+           Downheader_new[ match( as.numeric(TargetTable_test[i,2]), as.numeric( Downheader_new[,13])), 12]) / max_test[8]
+  
+  Upcandidates_attribute_test_missing[i,9] <-
+    sub_all_test[ match( as.numeric(TargetTable_test[i,3]), as.numeric( sub_all_test[,6])),3]  / max_test[9]
   
   
 }
@@ -107,10 +112,9 @@ jointprob_matching_test <- data.frame()
 jointprob_missing_test <- data.frame()
 
 
-# Target_baseanalysis_Jan0910_table_train 
-# Target_baseanalysis_Jan0910_table_test
 j <- 0
 k <- 0
+buf <- 0.001
 
 for (i in 1:length(Upcandidates_attribute_train_missing[,1])){
   #   if ( as.numeric (Downtarget_attributes_train [i,2] ) == 9 ) { 
@@ -118,34 +122,36 @@ for (i in 1:length(Upcandidates_attribute_train_missing[,1])){
   
   j <- j+1
   
-  jointprob_matching_train[j,1] <-(approx(kernel.length_m$x, kernel.length_m$y,  Upcandidates_attribute_train_missing[i,1]) )$y
-  jointprob_matching_train[j,2] <-(approx(kernel.gvw_m$x, kernel.gvw_m$y, Upcandidates_attribute_train_missing[i,2]) )$y
-  jointprob_matching_train[j,3] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Upcandidates_attribute_train_missing[i,3]) )$y
-  jointprob_matching_train[j,4] <-(approx(kernel.axsp23_m$x, kernel.axsp23_m$y, Upcandidates_attribute_train_missing[i,4]) )$y
-  jointprob_matching_train[j,5] <-(approx(kernel.axsp34_m$x, kernel.axsp34_m$y, Upcandidates_attribute_train_missing[i,5]) )$y
-  jointprob_matching_train[j,6] <-(approx(kernel.axsp45_m$x, kernel.axsp45_m$y, Upcandidates_attribute_train_missing[i,6]) )$y
-  jointprob_matching_train[j,7] <-(approx(kernel.dur_m$x, kernel.dur_m$y, Upcandidates_attribute_train_missing[i,7]) )$y
-  jointprob_matching_train[j,8] <-(approx(kernel.utc_m$x, kernel.utc_m$y, Upcandidates_attribute_train_missing[i,8]) )$y
-  jointprob_matching_train[j,9] <- 0.5 # for now
   
-  jointprob_matching_train [is.na(jointprob_matching_train )] <- 0.000000000001
+  
+  jointprob_matching_train[j,1] <-(approx(kernel_mat[[1]]$x, kernel_mat[[1]]$y,  Upcandidates_attribute_train_missing[i,1]) )$y
+  jointprob_matching_train[j,2] <-(approx(kernel_mat[[2]]$x, kernel_mat[[2]]$y,  Upcandidates_attribute_train_missing[i,2]) )$y
+  jointprob_matching_train[j,3] <-(approx(kernel_mat[[3]]$x, kernel_mat[[3]]$y,  Upcandidates_attribute_train_missing[i,3]) )$y
+  jointprob_matching_train[j,4] <-(approx(kernel_mat[[4]]$x, kernel_mat[[4]]$y,  Upcandidates_attribute_train_missing[i,4]) )$y
+  jointprob_matching_train[j,5] <-(approx(kernel_mat[[5]]$x, kernel_mat[[5]]$y,  Upcandidates_attribute_train_missing[i,5]) )$y
+  jointprob_matching_train[j,6] <-(approx(kernel_mat[[6]]$x, kernel_mat[[6]]$y,  Upcandidates_attribute_train_missing[i,6]) )$y
+  jointprob_matching_train[j,7] <-(approx(kernel_mat[[7]]$x, kernel_mat[[7]]$y,  Upcandidates_attribute_train_missing[i,7]) )$y
+  jointprob_matching_train[j,8] <-(approx(kernel_mat[[8]]$x, kernel_mat[[8]]$y,  Upcandidates_attribute_train_missing[i,8]) )$y
+  jointprob_matching_train[j,9] <-(approx(kernel_mat[[9]]$x, kernel_mat[[9]]$y,  Upcandidates_attribute_train_missing[i,9]) )$y
+  
+  jointprob_matching_train [is.na(jointprob_matching_train )] <- buf 
   jointprob_matching_train[j,10] <- jointprob_matching_train[j,1]* jointprob_matching_train[j,2] * jointprob_matching_train[j,3] *
     jointprob_matching_train[j,4] *  jointprob_matching_train[j,5] * jointprob_matching_train[j,6] *
     jointprob_matching_train[j,7] * jointprob_matching_train[j,8] * jointprob_matching_train[j,9] 
   
   
   k <- k+1
-  jointprob_missing_train[k,1] <-(approx(kernel.length_nm$x, kernel.length_nm$y,  Upcandidates_attribute_train_missing[i,1]) )$y
-  jointprob_missing_train[k,2] <-(approx(kernel.gvw_nm$x, kernel.gvw_nm$y, Upcandidates_attribute_train_missing[i,2]) )$y
-  jointprob_missing_train[k,3] <-(approx(kernel.axsp12_nm$x, kernel.axsp12_nm$y, Upcandidates_attribute_train_missing[i,3]) )$y
-  jointprob_missing_train[k,4] <-(approx(kernel.axsp23_nm$x, kernel.axsp23_nm$y, Upcandidates_attribute_train_missing[i,4]) )$y
-  jointprob_missing_train[k,5] <-(approx(kernel.axsp34_nm$x, kernel.axsp34_nm$y, Upcandidates_attribute_train_missing[i,5]) )$y
-  jointprob_missing_train[k,6] <-(approx(kernel.axsp45_nm$x, kernel.axsp45_nm$y, Upcandidates_attribute_train_missing[i,6]) )$y
-  jointprob_missing_train[k,7] <-(approx(kernel.dur_nm$x, kernel.dur_nm$y, Upcandidates_attribute_train_missing[i,7]) )$y
-  jointprob_missing_train[k,8] <-(approx(kernel.utc_nm$x, kernel.utc_nm$y, Upcandidates_attribute_train_missing[i,8]) )$y
-  jointprob_missing_train[k,9] <- 0.5 # for now
+  jointprob_missing_train[k,1] <-(approx(kernel_nonmat[[1]]$x, kernel_nonmat[[1]]$y,  Upcandidates_attribute_train_missing[i,1]) )$y
+  jointprob_missing_train[k,2] <-(approx(kernel_nonmat[[2]]$x, kernel_nonmat[[2]]$y,  Upcandidates_attribute_train_missing[i,2]) )$y
+  jointprob_missing_train[k,3] <-(approx(kernel_nonmat[[3]]$x, kernel_nonmat[[3]]$y,  Upcandidates_attribute_train_missing[i,3]) )$y
+  jointprob_missing_train[k,4] <-(approx(kernel_nonmat[[4]]$x, kernel_nonmat[[4]]$y,  Upcandidates_attribute_train_missing[i,4]) )$y
+  jointprob_missing_train[k,5] <-(approx(kernel_nonmat[[5]]$x, kernel_nonmat[[5]]$y,  Upcandidates_attribute_train_missing[i,5]) )$y
+  jointprob_missing_train[k,6] <-(approx(kernel_nonmat[[6]]$x, kernel_nonmat[[6]]$y,  Upcandidates_attribute_train_missing[i,6]) )$y
+  jointprob_missing_train[k,7] <-(approx(kernel_nonmat[[7]]$x, kernel_nonmat[[7]]$y,  Upcandidates_attribute_train_missing[i,7]) )$y
+  jointprob_missing_train[k,8] <-(approx(kernel_nonmat[[8]]$x, kernel_nonmat[[8]]$y,  Upcandidates_attribute_train_missing[i,8]) )$y
+  jointprob_missing_train[k,9] <-(approx(kernel_nonmat[[9]]$x, kernel_nonmat[[9]]$y,  Upcandidates_attribute_train_missing[i,9]) )$y
   
-  jointprob_missing_train [is.na(jointprob_missing_train )] <- 0.000000000001
+  jointprob_missing_train [is.na(jointprob_missing_train )] <- buf 
   jointprob_missing_train[k,10] <- jointprob_missing_train[k,1]* jointprob_missing_train[k,2] * jointprob_missing_train[k,3] *
     jointprob_missing_train[k,4] *  jointprob_missing_train[k,5] * jointprob_missing_train[k,6] *
     jointprob_missing_train[k,7] * jointprob_missing_train[k,8] * jointprob_missing_train[k,9] 
@@ -163,17 +169,17 @@ for (i in 1:length(Upcandidates_attribute_test_missing[,1])){
   
   j <- j+1
   
-  jointprob_matching_test[j,1] <-(approx(kernel.length_m$x, kernel.length_m$y,  Upcandidates_attribute_test_missing[i,1]) )$y
-  jointprob_matching_test[j,2] <-(approx(kernel.gvw_m$x, kernel.gvw_m$y, Upcandidates_attribute_test_missing[i,2]) )$y
-  jointprob_matching_test[j,3] <-(approx(kernel.axsp12_m$x, kernel.axsp12_m$y, Upcandidates_attribute_test_missing[i,3]) )$y
-  jointprob_matching_test[j,4] <-(approx(kernel.axsp23_m$x, kernel.axsp23_m$y, Upcandidates_attribute_test_missing[i,4]) )$y
-  jointprob_matching_test[j,5] <-(approx(kernel.axsp34_m$x, kernel.axsp34_m$y, Upcandidates_attribute_test_missing[i,5]) )$y
-  jointprob_matching_test[j,6] <-(approx(kernel.axsp45_m$x, kernel.axsp45_m$y, Upcandidates_attribute_test_missing[i,6]) )$y
-  jointprob_matching_test[j,7] <-(approx(kernel.dur_m$x, kernel.dur_m$y, Upcandidates_attribute_test_missing[i,7]) )$y
-  jointprob_matching_test[j,8] <-(approx(kernel.utc_m$x, kernel.utc_m$y, Upcandidates_attribute_test_missing[i,8]) )$y
-  jointprob_matching_test[j,9] <- 0.5 # for now
+  jointprob_matching_test[j,1] <-(approx(kernel_mat[[1]]$x, kernel_mat[[1]]$y,  Upcandidates_attribute_test_missing[i,1]) )$y
+  jointprob_matching_test[j,2] <-(approx(kernel_mat[[2]]$x, kernel_mat[[2]]$y,  Upcandidates_attribute_test_missing[i,2]) )$y
+  jointprob_matching_test[j,3] <-(approx(kernel_mat[[3]]$x, kernel_mat[[3]]$y,  Upcandidates_attribute_test_missing[i,3]) )$y
+  jointprob_matching_test[j,4] <-(approx(kernel_mat[[4]]$x, kernel_mat[[4]]$y,  Upcandidates_attribute_test_missing[i,4]) )$y
+  jointprob_matching_test[j,5] <-(approx(kernel_mat[[5]]$x, kernel_mat[[5]]$y,  Upcandidates_attribute_test_missing[i,5]) )$y
+  jointprob_matching_test[j,6] <-(approx(kernel_mat[[6]]$x, kernel_mat[[6]]$y,  Upcandidates_attribute_test_missing[i,6]) )$y
+  jointprob_matching_test[j,7] <-(approx(kernel_mat[[7]]$x, kernel_mat[[7]]$y,  Upcandidates_attribute_test_missing[i,7]) )$y
+  jointprob_matching_test[j,8] <-(approx(kernel_mat[[8]]$x, kernel_mat[[8]]$y,  Upcandidates_attribute_test_missing[i,8]) )$y
+  jointprob_matching_test[j,9] <-(approx(kernel_mat[[9]]$x, kernel_mat[[9]]$y,  Upcandidates_attribute_test_missing[i,9]) )$y
   
-  jointprob_matching_test [is.na(jointprob_matching_test )] <- 0.000000000001
+  jointprob_matching_test [is.na(jointprob_matching_test )] <- buf 
   jointprob_matching_test[j,10] <- jointprob_matching_test[j,1]* jointprob_matching_test[j,2] * jointprob_matching_test[j,3] *
     jointprob_matching_test[j,4] *  jointprob_matching_test[j,5] * jointprob_matching_test[j,6] *
     jointprob_matching_test[j,7] * jointprob_matching_test[j,8] * jointprob_matching_test[j,9] 
@@ -182,17 +188,17 @@ for (i in 1:length(Upcandidates_attribute_test_missing[,1])){
   
   k <- k+1
   
-  jointprob_missing_test[k,1] <-(approx(kernel.length_nm$x, kernel.length_nm$y,  Upcandidates_attribute_test_missing[i,1]) )$y
-  jointprob_missing_test[k,2] <-(approx(kernel.gvw_nm$x, kernel.gvw_nm$y, Upcandidates_attribute_test_missing[i,2]) )$y
-  jointprob_missing_test[k,3] <-(approx(kernel.axsp12_nm$x, kernel.axsp12_nm$y, Upcandidates_attribute_test_missing[i,3]) )$y
-  jointprob_missing_test[k,4] <-(approx(kernel.axsp23_nm$x, kernel.axsp23_nm$y, Upcandidates_attribute_test_missing[i,4]) )$y
-  jointprob_missing_test[k,5] <-(approx(kernel.axsp34_nm$x, kernel.axsp34_nm$y, Upcandidates_attribute_test_missing[i,5]) )$y
-  jointprob_missing_test[k,6] <-(approx(kernel.axsp45_nm$x, kernel.axsp45_nm$y, Upcandidates_attribute_test_missing[i,6]) )$y
-  jointprob_missing_test[k,7] <-(approx(kernel.dur_nm$x, kernel.dur_nm$y, Upcandidates_attribute_test_missing[i,7]) )$y
-  jointprob_missing_test[k,8] <-(approx(kernel.utc_nm$x, kernel.utc_nm$y, Upcandidates_attribute_test_missing[i,8]) )$y
-  jointprob_missing_test[k,9] <- 0.5 # for now
+  jointprob_missing_test[k,1] <-(approx(kernel_nonmat[[1]]$x, kernel_nonmat[[1]]$y,  Upcandidates_attribute_test_missing[i,1]) )$y
+  jointprob_missing_test[k,2] <-(approx(kernel_nonmat[[2]]$x, kernel_nonmat[[2]]$y,  Upcandidates_attribute_test_missing[i,2]) )$y
+  jointprob_missing_test[k,3] <-(approx(kernel_nonmat[[3]]$x, kernel_nonmat[[3]]$y,  Upcandidates_attribute_test_missing[i,3]) )$y
+  jointprob_missing_test[k,4] <-(approx(kernel_nonmat[[4]]$x, kernel_nonmat[[4]]$y,  Upcandidates_attribute_test_missing[i,4]) )$y
+  jointprob_missing_test[k,5] <-(approx(kernel_nonmat[[5]]$x, kernel_nonmat[[5]]$y,  Upcandidates_attribute_test_missing[i,5]) )$y
+  jointprob_missing_test[k,6] <-(approx(kernel_nonmat[[6]]$x, kernel_nonmat[[6]]$y,  Upcandidates_attribute_test_missing[i,6]) )$y
+  jointprob_missing_test[k,7] <-(approx(kernel_nonmat[[7]]$x, kernel_nonmat[[7]]$y,  Upcandidates_attribute_test_missing[i,7]) )$y
+  jointprob_missing_test[k,8] <-(approx(kernel_nonmat[[8]]$x, kernel_nonmat[[8]]$y,  Upcandidates_attribute_test_missing[i,8]) )$y
+  jointprob_missing_test[k,9] <-(approx(kernel_nonmat[[9]]$x, kernel_nonmat[[9]]$y,  Upcandidates_attribute_test_missing[i,9]) )$y
   
-  jointprob_missing_test [is.na(jointprob_missing_test )] <- 0.000000000001
+  jointprob_missing_test [is.na(jointprob_missing_test )] <- buf 
   jointprob_missing_test[k,10] <- jointprob_missing_test[k,1]* jointprob_missing_test[k,2] * jointprob_missing_test[k,3] *
     jointprob_missing_test[k,4] *  jointprob_missing_test[k,5] * jointprob_missing_test[k,6] *
     jointprob_missing_test[k,7] * jointprob_missing_test[k,8] * jointprob_missing_test[k,9] 
@@ -295,6 +301,8 @@ ResultMismissing_test <- data.frame( matching_obj_test[1], missing_obj_test[1],
 
 
 ## end
+
+
 # rm(sub_all_v2, aub_all_diff)
 # 
 # 
